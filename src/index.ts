@@ -1,17 +1,13 @@
 import { getTypeStructure, optimizeTypeStructure } from "./get-type-structure";
 import { Options } from "./model";
-import { shim } from "es7-shim/es7-shim";
-import {
-  getInterfaceDescriptions,
-  getInterfaceStringFromDescription
-} from "./get-interfaces";
+import { getInterfaceDescriptions, getInterfaceStringFromDescription } from "./get-interfaces";
 import { getNames } from "./get-names";
 import { isArray, isObject } from "./util";
-shim();
 
 export default function JsonToTS(json: any, userOptions?: Options): string[] {
   const defaultOptions: Options = {
-    rootName: "RootObject"
+    rootName: "RootObject",
+    camelCaseKey: false
   };
   const options = {
     ...defaultOptions,
@@ -31,7 +27,7 @@ export default function JsonToTS(json: any, userOptions?: Options): string[] {
     throw new Error("Only (Object) and (Array of Object) are supported");
   }
 
-  const typeStructure = getTypeStructure(json);
+  const typeStructure = getTypeStructure(json, [], options.camelCaseKey);
   /**
    * due to merging array types some types are switched out for merged ones
    * so we delete the unused ones here

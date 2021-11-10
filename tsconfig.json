@@ -2,13 +2,15 @@
     "compilerOptions": {
         "declaration": true,
         "module": "commonjs",
-        "target": "es5",
+        "target": "ESNext",
         "noImplicitAny": false,
         "sourceMap": true,
         "outDir": "build",
         "lib": [
-          "es2017",
+          "ESNext",
           "dom"
         ]
-    }
+    },
+    "include": ["src"],
+    "exclude": ["test"]
 }
